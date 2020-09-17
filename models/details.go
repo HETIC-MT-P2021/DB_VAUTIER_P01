@@ -1,44 +1,54 @@
 package models
 
-import "time"
-
-type Order struct {
-	Number		uint64 	`json:"orderNumber"`
-	ItemsNumber uint64	`json:"itemsNumber"`
-	TotalPrice 	float64	`json:"totalPrice"`
+type OrderDetails struct {
+	Productcode      	string  `json:"productcode"`
+	ProductName 		string  `json:"productName"`
+	ProductDescription  string `json:"productDescription"`
+	Quantity  			uint64 `json:"quantity"`
+	UnitPrice  			float64 `json:"unitPrice"`
+	LinePrice			float64	`json:"linePrice"`
 }
 
-func FindOrdersByCustomerNumber(number uint64) ([]Order, error){
+func FindOrderDetailsByOrderNumber(number uint64) ([]OrderDetails, error) {
 	var (
-		Number		uint64 	
-		ItemsNumber uint64
-		TotalPrice 	float64
+		Productcode      	string
+		ProductName 		string
+		ProductDescription  string
+		Quantity  			uint64
+		UnitPrice  			float64
+		LinePrice			float64
 	)
-	var orders []Order
+	var orderDetails []OrderDetails
 
-	rows, err := db.Query("SELECT o.orderNumber, SUM(od.quantityOrdered) AS 'Items number', SUM(od.priceEach * od.quantityOrdered) AS 'Total price' FROM orders o INNER JOIN orderdetails od ON od.orderNumber = o.orderNumber WHERE o.customerNumber = ? GROUP BY o.orderNumber;", number)
-	
+	rows, err := db.Query("SELECT od.productCode,p.productName, p.productDescription, od.quantityOrdered, od.priceEach, (od.quantityOrdered*od.priceEach) FROM orders o INNER JOIN orderdetails od ON od.orderNumber = o.orderNumber INNER JOIN products p ON od.productCode = p.productCode WHERE o.orderNumber = ? ORDER BY od.orderLineNumber", number)
+
 	defer rows.Close()
 	if err != nil {
-		return []Order{}, err
+		return []OrderDetails{}, err
 	}
 	for rows.Next() {
 		err = rows.Scan(
-			&Number,
-			&ItemsNumber,
-			&TotalPrice,
+			&Productcode,
+			&ProductName,
+			&ProductDescription,
+			&Quantity,
+			&UnitPrice,
+			&LinePrice,
 		)
 
-		order := Order{
-			Number: Number,
-			ItemsNumber: ItemsNumber,
-			TotalPrice: TotalPrice,
+		orderDetail := OrderDetails{
+			Productcode: Productcode,
+			ProductName: ProductName,
+			ProductDescription: ProductDescription,
+			Quantity: Quantity,
+			UnitPrice: UnitPrice,
+			LinePrice: LinePrice,
 		}
-		orders = append(orders, order)
+		orderDetails = append(orderDetails, orderDetail)
 	}
 	if err != nil {
-		return []Order{}, err
-	}	
+		return []OrderDetails{}, err
+	}
 
-	return orders, err
+	return orderDetails, err
 }

@@ -56,3 +56,10 @@ ORDER BY od.orderLineNumber
 
 - la liste des employés associés
 
+```sql
+SELECT e.employeeNumber
+FROM employees e
+INNER JOIN offices o ON e.officeCode = o.officeCode
+WHERE o.officeCode = 1
+```
+
