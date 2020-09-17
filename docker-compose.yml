@@ -15,7 +15,7 @@ services:
   shopapi:
     build: .
     environment:
-      DB_USER: shop
+      DB_USER: root
       DB_PASSWORD: shoppwd
       DB_HOST: shopdb
       DB_PORT: 3306

@@ -13,7 +13,10 @@ func SetupRouter(router *gin.Engine) {
 
 		v1 := api.Group("/v1")
 		{
-			v1.GET("/customers/:id", controllers.GetCustomerByNumber)
+			v1.GET("/customers/:number", controllers.GetCustomerByNumber)
+			v1.GET("/customers/:number/orders", controllers.GetOrdersByCustomerNumber)
+			v1.GET("/orders/:number", controllers.GetOrderByNumber)
+			v1.GET("/orders/:number/details", controllers.GetOrdersDetailsByOrderNumber)
 		}
 	}
 }
