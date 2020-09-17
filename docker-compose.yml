@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  shopdb:
+    image: mysql
+    restart: always
+    container_name: mysql
+    environment:
+      MYSQL_DATABASE: shop
+      MYSQL_USER: shop
+      MYSQL_ROOT_PASSWORD: shoppwd
+      MYSQL_PASSWORD: shoppwd
+    ports:
+    - "3306:3306"
+  shopapi:
+    build: .
+    environment:
+      DB_USER: shop
+      DB_PASSWORD: shoppwd
+      DB_HOST: shopdb
+      DB_PORT: 3306
+      DB_NAME: shop
+    volumes:
+      - ".:/go/src"
+    ports:
+      - "8000:8000"
+    tty: true
+    links:
+      - shopdb
+    depends_on:
+      - shopdb
+  shopadmin:
+    image: adminer
+    restart: always
+    links:
+      - shopdb
+    ports:
+      - 3000:8080
