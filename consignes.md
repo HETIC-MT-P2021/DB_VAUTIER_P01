@@ -50,14 +50,24 @@ ORDER BY od.orderLineNumber
 ## Vue employés
 
 - liste des employés avec leurs détails
+```sql
+SELECT e.employeeNumber, e.firstName, e.lastName, e.jobTitle, e.email, e.officeCode, o.city, o.addressLine1 FROM employees e 
+INNER JOIN offices o ON o.officeCode = e.officeCode
+ORDER BY e.officeCode, e.lastName
+```
 - pour chaque employé savoir avec quel magasin
 
 ## Vue magasins
 
+```sql
+SELECT o.officeCode, o.addressLine1, o.addressLine2, o.city, o.postalCode, o.`state`, o.phone, o.territory
+FROM offices o
+WHERE o.officeCode = 1 
+```
 - la liste des employés associés
 
 ```sql
-SELECT e.employeeNumber
+SELECT e.employeeNumber, e.firstName, e.lastName
 FROM employees e
 INNER JOIN offices o ON e.officeCode = o.officeCode
 WHERE o.officeCode = 1
