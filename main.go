@@ -5,8 +5,8 @@ import (
 	"time"
 
 	"github.com/caarlos0/env/v6"
-	"github.com/edwinvautier/bwar-back/models"
-	"github.com/edwinvautier/bwar-back/routes"
+	"github.com/edwinvautier/DB_VAUTIER_P01/models"
+	"github.com/edwinvautier/DB_VAUTIER_P01/routes"
 	"github.com/gin-gonic/gin"
 	cors "github.com/itsjamie/gin-cors"
 )
