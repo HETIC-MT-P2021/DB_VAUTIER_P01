@@ -6,7 +6,7 @@ services:
     restart: always
     container_name: mysql
     environment:
-      MYSQL_DATABASE: shop
+      MYSQL_DATABASE: classicmodels
       MYSQL_USER: shop
       MYSQL_ROOT_PASSWORD: shoppwd
       MYSQL_PASSWORD: shoppwd
@@ -19,7 +19,7 @@ services:
       DB_PASSWORD: shoppwd
       DB_HOST: shopdb
       DB_PORT: 3306
-      DB_NAME: shop
+      DB_NAME: classicmodels
     volumes:
       - ".:/go/src"
     ports:

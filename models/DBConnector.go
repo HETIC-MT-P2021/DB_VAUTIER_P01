@@ -3,20 +3,22 @@ package models
 import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/jinzhu/gorm"
-	"log"
+	"database/sql"
 )
 
-var db *gorm.DB
+var db *sql.DB
 
 func InitializeDb(user string, password string, host string, name string, port int) {
-	dbUrl := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local", user, password, host, port, name)
-	var tmpDb, err = gorm.Open("mysql", dbUrl)
-	if err != nil {
-		fmt.Printf("Cannot connect to database")
-		log.Fatal("error:", err)
-		return
+	var err error
+	dbUrl := fmt.Sprintf("%s:%s@tcp(127.0.0.1:%s)/%s", user, password, port, name)
+	db, err = sql.Open("mysql", dbUrl)
+
+    // if there is an error opening the connection, handle it
+    if err != nil {
+        panic(err.Error())
+    } else {
+		fmt.Println("Connected to database")
 	}
-	fmt.Printf("We are connected to database")
-	db = tmpDb
+    // Close the connection after main function has finished
+	defer db.Close()
 }
