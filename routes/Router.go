@@ -17,6 +17,7 @@ func SetupRouter(router *gin.Engine) {
 			v1.GET("/customers/:number/orders", controllers.GetOrdersByCustomerNumber)
 			v1.GET("/orders/:number", controllers.GetOrderByNumber)
 			v1.GET("/orders/:number/details", controllers.GetOrderDetailsByOrderNumber)
+			v1.GET("/offices/:code/employees", controllers.GetEmployeesByOfficeCode)
 		}
 	}
 }
