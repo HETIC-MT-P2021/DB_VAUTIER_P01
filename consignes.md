@@ -60,7 +60,7 @@ ORDER BY e.officeCode, e.lastName
 ## Vue magasins
 
 ```sql
-SELECT o.officeCode, o.addressLine1, o.addressLine2, o.city, o.postalCode, o.`state`, o.phone, o.territory
+SELECT o.officeCode, o.addressLine1, o.addressLine2, o.city, o.postalCode, o.state, o.phone, o.territory
 FROM offices o
 WHERE o.officeCode = 1 
 ```

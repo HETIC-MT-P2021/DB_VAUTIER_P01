@@ -22,3 +22,17 @@ func GetEmployeesByOfficeCode(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, employees)
 }
+
+func GetEmployees(c *gin.Context) {
+	var employees []models.EmployeeList
+	var err error
+
+	employees, err = models.FindEmployees()
+	fmt.Println(err)
+
+	if err != nil {
+		c.JSON(http.StatusNotFound, "Could'nt fetch employees.")
+		return
+	}
+	c.JSON(http.StatusOK, employees)
+}
